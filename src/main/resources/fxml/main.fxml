@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml">
+    <top><Label text="Welcome to the Main Page!" style="-fx-font-size: 24px; -fx-padding: 10px;"/></top>
+    <center>
+        <VBox spacing="10" alignment="center">
+            <Label text="Main Content Area" style="-fx-font-size: 18px;"/>
+        </VBox>
+    </center>
+</BorderPane>
