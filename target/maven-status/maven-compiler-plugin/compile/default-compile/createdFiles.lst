@@ -1,0 +1,4 @@
+com\demo\App.class
+com\demo\controller\LoginController.class
+com\demo\service\AuthService.class
+com\demo\util\SceneManager.class
