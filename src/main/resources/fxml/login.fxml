@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<GridPane fx:controller="com.example.demo.controller.LoginController"
-          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10"
-          stylesheets="@../styles/login.css">
-    <Label text="Username:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-    <TextField fx:id="username" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-    <Label text="Password:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-    <PasswordField fx:id="password" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-    <Button text="Login" onAction="#handleLogin" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-</GridPane>
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.demo.controller.LoginController"
+            stylesheets="@../styles/login.css">
+    <VBox spacing="10" alignment="CENTER" layoutX="100" layoutY="50" AnchorPane.leftAnchor="0"
+          AnchorPane.rightAnchor="0">
+        <Label text="Login" styleClass="title"/>
+        <TextField fx:id="inputUsername" promptText="username"/>
+        <PasswordField fx:id="inputPassword" promptText="Password"/>
+        <Button text="Login" onAction="#handleLogin"/>
+        <Label fx:id="errorLabel" styleClass="error"/>
+    </VBox>
+</AnchorPane>
