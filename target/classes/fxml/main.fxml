@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<BorderPane xmlns:fx="http://javafx.com/fxml">
-    <top><Label text="Welcome to the Main Page!" style="-fx-font-size: 24px; -fx-padding: 10px;"/></top>
+<?import javafx.scene.web.WebView?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.demo.controller.MainController">
+
+    <top>
+        <Label text="Welcome to the Main Page!" style="-fx-font-size: 24px; -fx-padding: 10px;"/>
+    </top>
+
     <center>
         <VBox spacing="10" alignment="center">
             <Label text="Main Content Area" style="-fx-font-size: 18px;"/>
+            <WebView fx:id="mapWebView" prefWidth="800" prefHeight="600"/>
         </VBox>
     </center>
+
 </BorderPane>

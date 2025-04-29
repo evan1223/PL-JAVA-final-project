@@ -8,7 +8,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.1.0</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
 
     <groupId>com.example</groupId>
@@ -18,17 +18,18 @@
     <properties>
         <java.version>17</java.version>
         <javafx.version>20</javafx.version>
-        
+        <gluon.maps.version>1.2.0</gluon.maps.version>
+        <gluon.attach.version>4.0.8</gluon.attach.version>
     </properties>
 
     <dependencies>
-        <!-- Spring Boot -->
+        <!-- Spring Boot Core -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
-        <!-- JavaFX -->
+        <!-- JavaFX Core -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
@@ -39,8 +40,13 @@
             <artifactId>javafx-fxml</artifactId>
             <version>${javafx.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-web</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
 
-        <!-- 可選：自動補完 Spring Boot 設定 -->
+        <!-- Spring Boot Configuration Processor (Optional) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
@@ -50,7 +56,7 @@
 
     <build>
         <plugins>
-            <!-- Java 編譯器 -->
+            <!-- Compiler Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -61,13 +67,13 @@
                 </configuration>
             </plugin>
 
-            <!-- JavaFX 專用插件 -->
+            <!-- JavaFX Maven Plugin -->
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>com.demo.App</mainClass>
+                    <mainClass>com.demo.App</mainClass> <!-- 根據你的主程式修改 -->
                 </configuration>
             </plugin>
         </plugins>

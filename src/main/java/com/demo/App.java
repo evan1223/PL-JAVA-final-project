@@ -25,6 +25,7 @@ public class App extends Application {
         SceneManager.setStage(primaryStage);
         SceneManager.switchScene("/fxml/login.fxml", "/styles/login.css", "Login Page");
         primaryStage.show();
+        //only need to call primaryStage.show() once to start and display the main window.
     }
 
     @Override
@@ -34,5 +35,6 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch(args);
+        //never call init(), start(), or stop() yourself — JavaFX does it automatically once launch() is invoked.
     }
 }
