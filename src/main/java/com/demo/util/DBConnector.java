@@ -17,3 +17,6 @@ public class DBConnector {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 }
+
+
+
