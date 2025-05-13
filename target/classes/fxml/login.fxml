@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.demo.controller.LoginController"
             stylesheets="@../styles/login.css">
+
     <VBox spacing="10" alignment="CENTER" layoutX="100" layoutY="50" AnchorPane.leftAnchor="0"
           AnchorPane.rightAnchor="0">
+
         <Label text="Login" styleClass="title"/>
-        <TextField fx:id="inputUsername" promptText="username"/>
+        <TextField fx:id="inputUsername" promptText="Username"/>
         <PasswordField fx:id="inputPassword" promptText="Password"/>
+
         <Button text="Login" onAction="#handleLogin"/>
+        <Button text="Sign Up" onAction="#handleGoToEnroll"/> <!-- 新增的按鈕 -->
+
         <Label fx:id="errorLabel" styleClass="error"/>
     </VBox>
 </AnchorPane>

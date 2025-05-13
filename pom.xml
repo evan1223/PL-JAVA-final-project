@@ -44,6 +44,13 @@
             <version>${javafx.version}</version> <!-- Use property -->
         </dependency>
 
+        <!-- MySQL JDBC -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.0.33</version>
+        </dependency>
+
         <!-- Spring Boot Configuration Processor (Optional) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

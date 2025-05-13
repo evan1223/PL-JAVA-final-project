@@ -5,10 +5,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Label;
 import javafx.event.ActionEvent;
-import com.demo.util.*;
+
+
+import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.Label;
+import javafx.event.ActionEvent;
+import com.demo.util.SceneManager;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.demo.service.*;
+import com.demo.service.AuthService;
 
 import java.io.IOException;
 
@@ -43,5 +50,13 @@ public class LoginController {
             errorLabel.setText("Invalid credentials");
         }
     }
-}
 
+    @FXML
+    private void handleGoToEnroll(ActionEvent event) {
+        try {
+            SceneManager.switchScene("/fxml/enroll.fxml", "/styles/main.css", "Sign Up");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
