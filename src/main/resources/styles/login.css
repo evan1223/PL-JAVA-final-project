@@ -1,12 +1,61 @@
-.title {
-    -fx-font-size: 24px;
+.root {
+    -fx-background-color: transparent;
+}
+
+.root-pane {
+    -fx-background-radius: 15;
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #a0d4d4, #00557f);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 20, 0.5, 5, 5);
+    -fx-padding: 20;
+    }
+
+
+
+.title-label {
+    -fx-font-size: 28px;
     -fx-font-weight: bold;
+    -fx-text-fill: white;
 }
 
-.text-field, .password-field {
-    -fx-pref-width: 200px;
+.field-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
 }
 
-.error {
-    -fx-text-fill: red;
+.input-field {
+    -fx-pref-width: 250px;
+    -fx-pref-height: 35px;
+    -fx-background-radius: 10;
+    -fx-background-color: #eeeeee;
+    -fx-border-color: transparent transparent #cccccc transparent;
+    -fx-border-width: 0 0 2px 0;
+    -fx-padding: 5 10;
 }
+
+.button {
+    -fx-pref-width: 100px;
+    -fx-pref-height: 35px;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-background-radius: 10;
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #3d89c9, #2566a0);
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0.2, 0, 2);
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #4a9edc, #2d76b5);
+}
+.input-field:hover {
+    -fx-background-color: #fdfdfd;
+    -fx-border-color: #87c4ff;
+    -fx-border-width: 0 0 2px 0;
+}
+
+.button:hover {
+    -fx-translate-y: -2;
+    -fx-cursor: hand;
+}
+
+

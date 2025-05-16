@@ -4,7 +4,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.demo.controller.EnrollController"
-            stylesheets="@../styles/enroll.css">
+            stylesheets="@/styles/enroll.css">
     <VBox spacing="10" alignment="CENTER" layoutX="100" layoutY="50"
           AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
 
@@ -14,8 +14,9 @@
         <PasswordField fx:id="confirmPassword" promptText="Confirm Password"/>
 
         <Button text="Sign Up" onAction="#handleEnroll"/>
-        <Button text="Back to Login" onAction="#handleGoToLogin"/> <!-- 新增的返回按鈕 -->
+        <Button text="Back to Login" onAction="#handleGoToLogin"/>
 
         <Label fx:id="enrollErrorLabel" styleClass="error"/>
+        <Label fx:id="enrollSuccessLabel" styleClass="success-label" text=""/>
     </VBox>
 </AnchorPane>

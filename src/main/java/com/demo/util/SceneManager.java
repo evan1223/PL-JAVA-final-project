@@ -23,13 +23,20 @@ public class SceneManager {
     }
 
     public static void switchScene(String fxmlPath, String cssPath, String title) throws IOException {
+        System.out.println("switchScene called with: " + fxmlPath);
         URL fxmlUrl = SceneManager.class.getResource(fxmlPath);
         if (fxmlUrl == null) {
             throw new IOException("FXML file not found: " + fxmlPath);
         }
 
         FXMLLoader loader = new FXMLLoader(fxmlUrl);
-        loader.setControllerFactory(context::getBean); // Spring injects controller
+        loader.setControllerFactory(clazz -> {
+            System.out.println("Controller factory triggered: " + clazz.getName());
+            Object bean = context.getBean(clazz);
+            System.out.println("➡ 使用 Spring 建立 Controller: " + bean.getClass().getName());
+            return bean;
+        });
+
         Parent root = loader.load();
 
         Scene scene = new Scene(root);

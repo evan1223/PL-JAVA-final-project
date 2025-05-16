@@ -27,6 +27,9 @@ public class EnrollController {
     @FXML
     private Label enrollErrorLabel;
 
+    @FXML
+    private Label enrollSuccessLabel;
+
     @Autowired
     private AuthService authService;
 

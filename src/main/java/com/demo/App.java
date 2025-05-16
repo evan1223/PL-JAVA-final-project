@@ -20,13 +20,16 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // Setup SceneManager
         SceneManager.setAppContext(springContext);
         SceneManager.setStage(primaryStage);
+
+        System.out.println("Before switchScene");
         SceneManager.switchScene("/fxml/login.fxml", "/styles/login.css", "Login Page");
+        System.out.println("After switchScene");
+
         primaryStage.show();
-        //only need to call primaryStage.show() once to start and display the main window.
     }
+
 
     @Override
     public void stop() {

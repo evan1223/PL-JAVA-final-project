@@ -3,17 +3,31 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.web.WebView?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.demo.controller.MainController">
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.demo.controller.MainController"
+            stylesheets="@/styles/main.css"
+            styleClass="root-pane">
 
     <top>
-        <Label text="Welcome to the Main Page!" style="-fx-font-size: 24px; -fx-padding: 10px;"/>
+        <Label text="Welcome to the Main Page!" styleClass="header-label"/>
     </top>
 
+    <left>
+        <VBox spacing="20" alignment="CENTER">
+            <Button text="Logout" styleClass="logout-button"/>
+            <!-- 可以再加 weather-info 等 -->
+        </VBox>
+    </left>
+
     <center>
-        <VBox spacing="10" alignment="center">
-            <Label text="Main Content Area" style="-fx-font-size: 18px;"/>
+        <VBox spacing="10" alignment="CENTER" styleClass="map-area">
             <WebView fx:id="mapWebView" prefWidth="800" prefHeight="600"/>
         </VBox>
     </center>
 
+    <bottom>
+        <Label text="Contact us: 123-456-7890" style="-fx-font-size: 13px; -fx-text-fill: #114d66; -fx-padding: 5 15;"/>
+    </bottom>
+
 </BorderPane>
+
