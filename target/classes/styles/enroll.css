@@ -1,0 +1,18 @@
+.title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.text-field, .password-field {
+    -fx-pref-width: 200px;
+}
+
+.error {
+    -fx-text-fill: red;
+    -fx-font-weight: bold;
+}
+
+.success-label {
+    -fx-text-fill: green;
+    -fx-font-weight: bold;
+}
