@@ -5,6 +5,8 @@ import javafx.concurrent.Worker;
 import javafx.scene.Scene;
 import javafx.fxml.FXML;
 import javafx.application.Platform;
+
+import java.io.IOException;
 import java.net.URL;
 import org.springframework.stereotype.Component;
 
@@ -59,5 +61,16 @@ public class MainController {
             }
         });
 
+    }
+
+    @FXML
+    private void handleLogout(){
+        Platform.runLater(() -> {
+            try {
+                SceneManager.switchScene("/fxml/login.fxml", "/styles/main.css", "Login");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 }

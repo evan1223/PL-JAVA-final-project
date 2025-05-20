@@ -1,7 +1,3 @@
 com\demo\App.class
 com\demo\controller\EnrollController.class
 com\demo\service\AuthService.class
-com\demo\controller\MainController.class
-com\demo\util\SceneManager.class
-com\demo\controller\LoginController.class
-com\demo\util\DBConnector.class

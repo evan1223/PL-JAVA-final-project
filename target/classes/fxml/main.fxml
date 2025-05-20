@@ -14,7 +14,7 @@
 
     <left>
         <VBox spacing="20" alignment="CENTER">
-            <Button text="Logout" styleClass="logout-button"/>
+            <Button text="Logout" styleClass="logout-button" onAction="#handleLogout" layoutX="10" layoutY="10"/>
             <!-- 可以再加 weather-info 等 -->
         </VBox>
     </left>
