@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.demo.controller.DescriptionController"
+      stylesheets="@/styles/main.css"
+      styleClass="root-pane"
+      spacing="10" alignment="CENTER"
+      style="-fx-padding: 20;">
+    <Label text="Description Area" styleClass="header-label"/>
+
+    <TextArea fx:id="descriptionTextArea"
+              promptText="Write your description here..."
+              wrapText="true" prefHeight="200"
+              styleClass="text-area"/>
+
+    <Button text="Submit"
+            onAction="#handleSubmitDescription"
+            styleClass="logout-button"/>
+
+    <Label text="Saved Descriptions:" styleClass="sub-header-label"/>
+
+    <ScrollPane fitToWidth="true" prefHeight="200">
+        <VBox fx:id="descriptionLogBox" spacing="5" styleClass="scroll-content"/>
+    </ScrollPane>
+</VBox>
+
