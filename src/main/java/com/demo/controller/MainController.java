@@ -3,12 +3,17 @@ package com.demo.controller;
 import javafx.scene.web.*;
 import javafx.concurrent.Worker;
 import javafx.scene.Scene;
+import javafx.stage.*;
 import javafx.fxml.FXML;
 import javafx.application.Platform;
+import com.demo.util.SceneManager;
 
 import java.io.IOException;
 import java.net.URL;
 import org.springframework.stereotype.Component;
+
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 
 @Component
 public class MainController {
@@ -73,4 +78,23 @@ public class MainController {
             }
         });
     }
+
+    @FXML
+    private void openDescriptionWindow() {
+        Platform.runLater(() -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/description.fxml"));
+                Parent root = loader.load();
+
+                Stage stage = new Stage();
+                stage.setTitle("Description Area");
+                stage.setScene(new Scene(root));
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
 }
