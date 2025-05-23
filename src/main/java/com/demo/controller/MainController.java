@@ -5,7 +5,7 @@ import javafx.concurrent.Worker;
 import javafx.scene.Scene;
 import javafx.fxml.FXML;
 import javafx.application.Platform;
-
+import com.demo.util.SceneManager;
 import java.io.IOException;
 import java.net.URL;
 import org.springframework.stereotype.Component;
@@ -15,6 +15,7 @@ public class MainController {
 
     @FXML
     private WebView mapWebView;
+
 
     @FXML
     private WebEngine webEngine;
