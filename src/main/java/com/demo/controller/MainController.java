@@ -1,5 +1,8 @@
 package com.demo.controller;
-
+import javafx.scene.control.Label;
+import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Map;
+import com.demo.service.WeatherService;
 import javafx.scene.web.*;
 import javafx.concurrent.Worker;
 import javafx.scene.Scene;
@@ -13,16 +16,28 @@ import org.springframework.stereotype.Component;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 @Component
 public class MainController {
 
     @FXML
+    private Label weatherLabel;
+    @FXML
+    private Label temperatureLabel;
+    @FXML
+    private Label precipitationLabel;
+    @Autowired
+    private WeatherService weatherService;
+    @FXML
     private WebView mapWebView;
-
 
     @FXML
     private WebEngine webEngine;
+
+    @FXML
+    private ImageView weatherIcon;
 
     @FXML
     public void initialize() {
@@ -65,7 +80,7 @@ public class MainController {
                 System.out.println("Successfully loaded URL: " + webEngine.getLocation());
             }
         });
-
+        loadWeatherData();
     }
 
     @FXML
@@ -96,5 +111,39 @@ public class MainController {
             }
         });
     }
+    private void loadWeatherData() {
+        new Thread(() -> {
+            try {
+                Map<String, Object> data = weatherService.getWeatherData();
+                int weatherCode = (int) data.get("weatherCode");
+                double temp = (double) data.get("temperature");
+                int precip = (int) data.get("precipitation");
+                String weatherDesc = weatherService.getWeatherDescription(weatherCode);
 
+                Platform.runLater(() -> {
+                    weatherLabel.setText("天气: " + weatherDesc);
+                    temperatureLabel.setText(String.format("%.1f°C", temp));
+                    precipitationLabel.setText(precip + "%");
+                    updateWeatherIcon(weatherCode);
+                });
+            } catch (Exception e) {
+                Platform.runLater(() -> weatherLabel.setText("天气数据加载失败"));
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+    private void updateWeatherIcon(int weatherCode) {
+        String iconPath;
+        if (weatherCode == 0) {
+            iconPath = "/icons/sunny.png";
+        } else if (weatherCode >= 1 && weatherCode <= 3) {
+            iconPath = "/icons/cloudy.png";
+        } else if (weatherCode >= 61) {
+            iconPath = "/icons/rainy.png";
+        } else {
+            iconPath = "/icons/unknown.png";
+        }
+        weatherIcon.setImage(new Image(getClass().getResourceAsStream(iconPath)));
+    }
 }

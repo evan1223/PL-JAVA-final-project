@@ -6,11 +6,24 @@
 .header-label {
     -fx-background-color: #175b76;
     -fx-text-fill: white;
-    -fx-font-size: 32px;
+    -fx-font-size: 20px;
     -fx-font-weight: bold;
     -fx-alignment: center;
-    -fx-padding: 10px;
-    -fx-background-radius: 0 0 10 10;
+    -fx-padding: 10px 15px;
+    -fx-min-width: 100%;
+}
+
+.weather-box {
+    -fx-padding: 10;
+    -fx-spacing: 5;
+    -fx-alignment: top;
+    -fx-background-radius: 5;
+    -fx-background-color: rgba(255, 255, 255, 0.7);
+}
+
+.weather-text {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
 }
 
 .logout-button {

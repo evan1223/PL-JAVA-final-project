@@ -2,21 +2,33 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.web.WebView?>
+<?import javafx.scene.image.ImageView?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.demo.controller.MainController"
             stylesheets="@/styles/main.css"
             styleClass="root-pane">
 
-    <top>
-        <Label text="Welcome to the Main Page!" styleClass="header-label"/>
-    </top>
+        <top>
+            <VBox>
+                <Label text="Welcome to the Main Page!" styleClass="header-label" maxWidth="Infinity"/>
+            </VBox>
+        </top>
+
 
     <left>
         <VBox spacing="20" alignment="CENTER">
+            <HBox spacing="20" alignment="TOP_CENTER" style="-fx-padding: 0 0 0 0;">
+                <VBox styleClass="weather-box">
+                    <ImageView fx:id="weatherIcon" fitWidth="50" preserveRatio="true"/>
+                    <Label fx:id="weatherLabel" styleClass="weather-text"/>
+                    <Label fx:id="temperatureLabel" styleClass="weather-text"/>
+                    <Label fx:id="precipitationLabel" styleClass="weather-text"/>
+                </VBox>
+            </HBox>
             <Button text="Logout" styleClass="logout-button" onAction="#handleLogout" layoutX="10" layoutY="10"/>
-            <Button text="Description Area" styleClass="logout-button" onAction="#openDescriptionWindow" layoutX="10" layoutY="10"/>
-            <!-- 可以再加 weather-info 等 -->
+            <Button text="Description Area" styleClass="logout-button" onAction="#openDescriptionWindow" layoutX="10"
+                    layoutY="10"/>
         </VBox>
     </left>
 
@@ -31,4 +43,3 @@
     </bottom>
 
 </BorderPane>
-
