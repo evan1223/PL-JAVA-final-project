@@ -29,6 +29,36 @@
         iconUrl: 'https://cdn4.iconfinder.com/data/icons/universal-7/614/17_-_Location-256.png',
         iconSize: [42, 42],
     });
+    // add the onClick event to the map
+    const popup = L.popup();
+    let lastMarker = null; // 保存最后添加的标记引用
+
+    function onMapClick(e) {
+        let lat = e.latlng.lat;
+        let lng = e.latlng.lng;
+
+        // if there is a last marker, remove it
+        if (lastMarker) {
+            map.removeLayer(lastMarker);
+        }
+
+        // create a new marker at the clicked location
+        const marker = L.marker(e.latlng, {
+            icon: customIcon
+        }).addTo(map);
+
+        // 保存当前标记的引用，以便下次点击时移除
+        lastMarker = marker;
+
+        // bind a popup to the marker
+        marker.bindPopup(`緯度：${lat}<br/>經度：${lng}`).openPopup();
+
+        // call the Java method to handle the click event
+        if (window.javaConnector) {
+            window.javaConnector.onMapClick(lat, lng);
+        }
+    }
+    map.on('click', onMapClick);
 
     // L.marker([24.9866487,121.5765365],{
     //     icon: customIcon

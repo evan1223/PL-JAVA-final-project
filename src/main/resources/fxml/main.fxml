@@ -26,9 +26,11 @@
                     <Label fx:id="precipitationLabel" styleClass="weather-text"/>
                 </VBox>
             </HBox>
-            <Button text="Logout" styleClass="logout-button" onAction="#handleLogout" layoutX="10" layoutY="10"/>
-            <Button text="Description Area" styleClass="logout-button" onAction="#openDescriptionWindow" layoutX="10"
+            <Button text="New" styleClass="button" onAction="#openDescriptionWindow" layoutX="10"
                     layoutY="10"/>
+            <Button text="Description" styleClass="button" onAction="#openDescriptionWindow" layoutX="10"
+                    layoutY="10"/>
+            <Button text="Logout" styleClass="button" onAction="#handleLogout" layoutX="10" layoutY="10"/>
         </VBox>
     </left>
 

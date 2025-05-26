@@ -1,35 +1,41 @@
 package com.demo.controller;
 
-import com.demo.service.UserService;
-import com.demo.util.UserSession;
+
+
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
+import java.io.IOException;
+import java.net.URL;
 
-import com.demo.service.WeatherService;
-import com.demo.service.MapMarkerService;
-import com.demo.util.MapMarker;
 import javafx.scene.web.*;
 import javafx.concurrent.Worker;
 import javafx.scene.Scene;
 import javafx.stage.*;
 import javafx.fxml.FXML;
 import javafx.application.Platform;
-import com.demo.util.SceneManager;
-
-import java.io.IOException;
-import java.net.URL;
-
-import org.springframework.stereotype.Component;
-
+import netscape.javascript.JSObject;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import com.demo.util.MapClickCallback;
+import com.demo.util.SceneManager;
+import com.demo.util.UserSession;
+import com.demo.service.WeatherService;
+import com.demo.service.MapMarkerService;
+import com.demo.util.MapMarker;
+
+
+
 @Component
-public class MainController {
+public class MainController implements MapClickCallback{
 
     @FXML
     private Label weatherLabel;
@@ -48,10 +54,13 @@ public class MainController {
 
     @FXML
     private ImageView weatherIcon;
+
     @Autowired
     private WeatherService weatherService;
+
     @Autowired
     private MapMarkerService markerService;
+
     @Autowired
     private UserSession userSession;
 
@@ -94,6 +103,10 @@ public class MainController {
             } else if (newState == Worker.State.SUCCEEDED) {
                 System.out.println("Successfully loaded URL: " + webEngine.getLocation());
                 System.out.println("Loading Markers");
+
+                // Add Java connector to the window object
+                JSObject window = (JSObject) webEngine.executeScript("window");
+                window.setMember("javaConnector", this);
                 addMarkersToMap();
             }
         });
@@ -115,14 +128,7 @@ public class MainController {
     private void openDescriptionWindow() {
         Platform.runLater(() -> {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/description.fxml"));
-                Parent root = loader.load();
-
-                Stage stage = new Stage();
-                stage.setTitle("Description Area");
-                stage.setScene(new Scene(root));
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.show();
+                SceneManager.openDescriptionWindow();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -176,5 +182,20 @@ public class MainController {
                 e.printStackTrace();
             }
         });
+    }
+
+    public void onMapClick(double latitude, double longitude) {
+        System.out.println("地图被点击：纬度=" + latitude + ", 经度=" + longitude);
+
+        // 这里可以添加你的处理逻辑，比如：
+        // 1. 在点击位置添加新标记
+        // 2. 弹出对话框让用户输入标记信息
+        // 3. 将标记保存到数据库等
+
+        // popup an alert dialog to show the clicked coordinates
+        Platform.runLater(() -> {
+            markerService.refreshUserMarkers();
+        });
+
     }
 }
