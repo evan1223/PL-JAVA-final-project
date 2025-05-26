@@ -1,9 +1,11 @@
 package com.demo.util;
 
+import org.springframework.stereotype.Component;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
+@Component
 public class DBConnector {
     // 遠端資料庫連線設定
     private static final String server = "jdbc:mysql://140.119.19.73:3315/";

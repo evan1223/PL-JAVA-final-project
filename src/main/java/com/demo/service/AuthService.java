@@ -1,5 +1,7 @@
 package com.demo.service;
 
+import com.demo.util.UserSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.demo.util.DBConnector;
 
@@ -10,7 +12,8 @@ import java.sql.SQLException;
 
 @Service
 public class AuthService {
-
+    @Autowired
+    private UserSession userSession;
     // 登入驗證
     public boolean authenticate(String username, String password) {
         String sql = "SELECT * FROM userAccount WHERE username = ? AND password = ?";
@@ -22,14 +25,16 @@ public class AuthService {
             stmt.setString(2, password);
 
             ResultSet rs = stmt.executeQuery();
-            return rs.next(); // 有資料表示帳號密碼正確
+            boolean success = rs.next(); // 有資料表示帳號密碼正確
+
+            if (success) { userSession.login(username); }
+            return success;
 
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
-
     // 註冊帳號
     public boolean register(String username, String password) {
         String checkSql = "SELECT * FROM userAccount WHERE username = ?";
@@ -56,5 +61,9 @@ public class AuthService {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public void logout() {
+        userSession.logout();
     }
 }
