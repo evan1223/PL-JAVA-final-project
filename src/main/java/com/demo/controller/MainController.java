@@ -1,8 +1,5 @@
 package com.demo.controller;
 
-
-
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,15 +10,11 @@ import java.net.URL;
 
 import javafx.scene.web.*;
 import javafx.concurrent.Worker;
-import javafx.scene.Scene;
 import javafx.stage.*;
 import javafx.fxml.FXML;
 import javafx.application.Platform;
 import netscape.javascript.JSObject;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -29,13 +22,11 @@ import com.demo.util.MapClickCallback;
 import com.demo.util.SceneManager;
 import com.demo.util.UserSession;
 import com.demo.service.WeatherService;
-import com.demo.service.MapMarkerService;
-import com.demo.util.MapMarker;
-
+import com.demo.util.MapMarkerManager;
 
 
 @Component
-public class MainController implements MapClickCallback{
+public class MainController implements MapClickCallback {
 
     @FXML
     private Label weatherLabel;
@@ -59,10 +50,12 @@ public class MainController implements MapClickCallback{
     private WeatherService weatherService;
 
     @Autowired
-    private MapMarkerService markerService;
+    private MapMarkerManager markerManager;
 
     @Autowired
     private UserSession userSession;
+
+    private Stage markerWindow;
 
     @FXML
     public void initialize() {
@@ -97,17 +90,14 @@ public class MainController implements MapClickCallback{
 
         // Debug load state
         webEngine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
-//            System.out.println(webEngine.g);
-            if (newState == Worker.State.FAILED) {
-                System.err.println("Failed to load URL: " + webEngine.getLocation());
-            } else if (newState == Worker.State.SUCCEEDED) {
-                System.out.println("Successfully loaded URL: " + webEngine.getLocation());
-                System.out.println("Loading Markers");
-
-                // Add Java connector to the window object
+            if (newState == Worker.State.SUCCEEDED) {
+                // 设置Java连接器
                 JSObject window = (JSObject) webEngine.executeScript("window");
                 window.setMember("javaConnector", this);
-                addMarkersToMap();
+
+                // 设置WebEngine到markerManager
+                markerManager.setWebEngine(webEngine);
+                markerManager.addMarkersToMap();
             }
         });
         loadWeatherData();
@@ -145,13 +135,13 @@ public class MainController implements MapClickCallback{
                 String weatherDesc = weatherService.getWeatherDescription(weatherCode);
 
                 Platform.runLater(() -> {
-                    weatherLabel.setText("天气: " + weatherDesc);
+                    weatherLabel.setText("天氣: " + weatherDesc);
                     temperatureLabel.setText(String.format("%.1f°C", temp));
-                    precipitationLabel.setText(precip + "%");
+                    precipitationLabel.setText("降雨" + precip + "%");
                     updateWeatherIcon(weatherCode);
                 });
             } catch (Exception e) {
-                Platform.runLater(() -> weatherLabel.setText("天气数据加载失败"));
+                Platform.runLater(() -> weatherLabel.setText("無法取得當前天氣資料"));
                 e.printStackTrace();
             }
         }).start();
@@ -171,12 +161,11 @@ public class MainController implements MapClickCallback{
         weatherIcon.setImage(new Image(getClass().getResourceAsStream(iconPath)));
     }
 
+    // 使用markerManager代替markerService
     private void addMarkersToMap() {
         Platform.runLater(() -> {
             try {
-                // Fetch user's markers in DB and add them to the map
-                markerService.refreshUserMarkers();
-                webEngine.executeScript(markerService.generateMarkersJavaScript());
+                markerManager.addMarkersToMap();
             } catch (Exception e) {
                 System.err.println("Failed to add markers: " + e.getMessage());
                 e.printStackTrace();
@@ -184,18 +173,53 @@ public class MainController implements MapClickCallback{
         });
     }
 
+    @Override
+    public boolean isMarkerWindowOpen() {
+        return markerWindow != null && markerWindow.isShowing();
+    }
+
+    @Override
     public void onMapClick(double latitude, double longitude) {
-        System.out.println("地图被点击：纬度=" + latitude + ", 经度=" + longitude);
+        System.out.println("地圖被點擊：緯度=" + latitude + ", 經度=" + longitude);
 
-        // 这里可以添加你的处理逻辑，比如：
-        // 1. 在点击位置添加新标记
-        // 2. 弹出对话框让用户输入标记信息
-        // 3. 将标记保存到数据库等
+        // open the marker window with the clicked coordinates
+        if (isMarkerWindowOpen()) {
+            Platform.runLater(() -> {
+                Scene scene = markerWindow.getScene();
+                if (scene != null) {
+                    AddMarkerController controller = (AddMarkerController) scene.getUserData();
+                    if (controller != null) {
+                        // 更新控制器中的坐标
+                        controller.setCoordinates(latitude, longitude);
+                        System.out.println("已更新標記坐標: " + latitude + ", " + longitude);
+                    }
+                }
+            });
+        }
+    }
 
-        // popup an alert dialog to show the clicked coordinates
+    @FXML
+    // 删除@Override注解，因为这不是接口中定义的方法
+    public void openAddMarkerWindow() {
         Platform.runLater(() -> {
-            markerService.refreshUserMarkers();
-        });
+            try {
+                // 需要更新SceneManager中的方法定义以接受markerManager参数
+                markerWindow = SceneManager.openAddMarkerWindow(24.9866487, 121.5765365);
 
+                // get the controller from the scene and set the markerManager
+                if (markerWindow != null) {
+                    Scene scene = markerWindow.getScene();
+                    if (scene != null) {
+                        AddMarkerController controller = (AddMarkerController) scene.getUserData();
+                        if (controller != null) {
+                            controller.setMarkerManager(markerManager);
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                System.err.println("無法打開新增標記視窗: " + e.getMessage());
+                e.printStackTrace();
+            }
+        });
     }
 }

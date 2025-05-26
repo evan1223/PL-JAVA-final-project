@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.demo.controller.AddMarkerController"
+      stylesheets="@/styles/main.css"
+      styleClass="root-pane"
+      spacing="10" alignment="CENTER"
+      prefWidth="400" prefHeight="500"
+      style="-fx-padding: 20;">
+
+    <Label text="添加新标记" styleClass="header-label"/>
+
+    <GridPane hgap="10" vgap="10">
+        <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+<!--        <Label text="纬度:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>-->
+<!--        <TextField fx:id="latitudeField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="0"/>-->
+
+<!--        <Label text="经度:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>-->
+<!--        <TextField fx:id="longitudeField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1"/>-->
+
+        <Label text="標記名稱:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+        <TextField fx:id="markerNameField" promptText="輸入標記名稱" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    </GridPane>
+
+    <Label text="Description:"/>
+    <TextArea fx:id="descriptionTextArea"
+              promptText="輸入相關敘述..."
+              wrapText="true" prefHeight="200"
+              styleClass="text-area"/>
+
+    <HBox spacing="20" alignment="CENTER">
+        <Button text="儲存" onAction="#handleSaveMarker" styleClass="button"/>
+        <Button text="取消" onAction="#handleCancel" styleClass="button"/>
+    </HBox>
+</VBox>

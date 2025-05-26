@@ -26,7 +26,7 @@
                     <Label fx:id="precipitationLabel" styleClass="weather-text"/>
                 </VBox>
             </HBox>
-            <Button text="New" styleClass="button" onAction="#openDescriptionWindow" layoutX="10"
+            <Button text="New" styleClass="button" onAction="#openAddMarkerWindow" layoutX="10"
                     layoutY="10"/>
             <Button text="Description" styleClass="button" onAction="#openDescriptionWindow" layoutX="10"
                     layoutY="10"/>

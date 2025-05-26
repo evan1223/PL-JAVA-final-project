@@ -10,6 +10,8 @@ import org.springframework.context.ApplicationContext;
 import java.io.IOException;
 import java.net.URL;
 
+import com.demo.controller.AddMarkerController;
+
 public class SceneManager {
 
     private static ApplicationContext context;
@@ -22,7 +24,9 @@ public class SceneManager {
     public static void setStage(Stage stage) {
         primaryStage = stage;
     }
-
+    public static Stage getPrimaryStage() {
+        return primaryStage;
+    }
     public static void switchScene(String fxmlPath, String cssPath, String title) throws IOException {
         System.out.println("switchScene called with: " + fxmlPath);
         URL fxmlUrl = SceneManager.class.getResource(fxmlPath);
@@ -84,5 +88,37 @@ public class SceneManager {
     // open a modal window for the description area
     public static Stage openDescriptionWindow() throws IOException {
         return openModalWindow("/fxml/description.fxml", "Description Area");
+    }
+
+    public static Stage openAddMarkerWindow(double latitude, double longitude) throws IOException {
+        URL fxmlUrl = SceneManager.class.getResource("/fxml/addMarker.fxml");
+        if (fxmlUrl == null) {
+            throw new IOException("FXML file not found: /fxml/addMarker.fxml");
+        }
+
+        FXMLLoader loader = new FXMLLoader(fxmlUrl);
+
+        if (context != null) {
+            loader.setControllerFactory(clazz -> context.getBean(clazz));
+        }
+
+        Parent root = loader.load();
+        Stage stage = new Stage();
+        stage.setTitle("添加标记");
+        stage.setScene(new Scene(root));
+        stage.initModality(Modality.NONE);
+        stage.initOwner(primaryStage);
+
+        // 设置经纬度
+        AddMarkerController controller = loader.getController();
+        controller.setStage(stage);
+        controller.setCoordinates(latitude, longitude);
+
+        // 将控制器保存到Scene的userData中，以便MainController可以获取到它
+        stage.getScene().setUserData(controller);
+
+        stage.show();
+
+        return stage;
     }
 }

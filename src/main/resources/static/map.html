@@ -19,7 +19,9 @@
 <div id="map"></div>
 <script src="../styles/leaflet/leaflet.js"></script>
 <script>
-    const map = L.map('map').setView([24.9866487,121.5765365], 18);
+    let currentMapCenter = [24.9866487, 121.5765365];
+    let currentZoomLevel = 18;
+    const map = L.map('map').setView(currentMapCenter, currentZoomLevel);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors'
@@ -29,31 +31,57 @@
         iconUrl: 'https://cdn4.iconfinder.com/data/icons/universal-7/614/17_-_Location-256.png',
         iconSize: [42, 42],
     });
+
+    // record the current map view (for Java)
+    function restoreMapView() {
+        map.setView(currentMapCenter, currentZoomLevel);
+    }
+
     // add the onClick event to the map
     const popup = L.popup();
     let lastMarker = null; // 保存最后添加的标记引用
 
+    function clearLastMarker() {
+        if (lastMarker) {
+            map.removeLayer(lastMarker);
+            lastMarker = null;
+        }
+    }
+
+    function clearAllMarkers() {
+
+        clearLastMarker();
+        // 移除所有其他标记
+        map.eachLayer(function(layer) {
+            if (layer instanceof L.Marker) {
+                map.removeLayer(layer);
+            }
+        });
+        map.setView(currentMapCenter, currentZoomLevel);
+    }
     function onMapClick(e) {
         let lat = e.latlng.lat;
         let lng = e.latlng.lng;
 
-        // if there is a last marker, remove it
-        if (lastMarker) {
-            map.removeLayer(lastMarker);
+        // check if the Java connector is available and the marker window is open
+        // only when the marker window is open, create a temporary marker
+        if (window.javaConnector && window.javaConnector.isMarkerWindowOpen()) {
+            // remove the last marker if existed
+            clearLastMarker()
+
+            // create a new marker at the clicked position
+            const marker = L.marker(e.latlng, {
+                icon: customIcon
+            }).addTo(map);
+
+            // save the reference to the last marker
+            lastMarker = marker;
+
+            // bidd a popup to the marker
+            marker.bindPopup(`設置在此位置?`).openPopup();
         }
 
-        // create a new marker at the clicked location
-        const marker = L.marker(e.latlng, {
-            icon: customIcon
-        }).addTo(map);
-
-        // 保存当前标记的引用，以便下次点击时移除
-        lastMarker = marker;
-
-        // bind a popup to the marker
-        marker.bindPopup(`緯度：${lat}<br/>經度：${lng}`).openPopup();
-
-        // call the Java method to handle the click event
+        // use the Java connector to pass the coordinates back to Java
         if (window.javaConnector) {
             window.javaConnector.onMapClick(lat, lng);
         }

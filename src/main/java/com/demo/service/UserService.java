@@ -49,4 +49,37 @@ public class UserService {
         }
         return result;
     }
+    /**
+     * 保存用户地图标记到数据库
+     * @param marker 地图标记对象
+     * @param description 标记描述
+     * @return 是否保存成功
+     */
+    public boolean saveUserMarker(MapMarker marker, String description) {
+        // 检查用户是否已登录
+        if (!userSession.isLoggedIn()) {
+            return false;
+        }
+
+        String sql = "INSERT INTO markers (username, latitude, longitude, popupText, isOpenPopup, description) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, userSession.getUsername());
+            ps.setDouble(2, marker.getLatitude());
+            ps.setDouble(3, marker.getLongitude());
+            ps.setString(4, marker.getPopupText());
+            ps.setBoolean(5, marker.getIsOpenPopup());
+            ps.setString(6, description);
+
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

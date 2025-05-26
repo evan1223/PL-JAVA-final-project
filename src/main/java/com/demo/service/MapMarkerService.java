@@ -18,9 +18,6 @@ public class MapMarkerService implements InitializingBean {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private UserSession userSession;
-
     // excute once after all dependencies are injected
     @Override
     public void afterPropertiesSet() {
@@ -65,5 +62,13 @@ public class MapMarkerService implements InitializingBean {
         }
 
         return script.toString();
+    }
+    public void saveMarkerToDatabase(MapMarker marker, String description) {
+        // save marker to DB
+        userService.saveUserMarker(marker, description);
+        // add marker to local list
+        markers.add(marker);
+        // refresh markers to ensure the latest data is used
+        refreshUserMarkers();
     }
 }
