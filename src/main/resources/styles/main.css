@@ -6,27 +6,14 @@
 .header-label {
     -fx-background-color: #175b76;
     -fx-text-fill: white;
-    -fx-font-size: 20px;
+    -fx-font-size: 32px;
     -fx-font-weight: bold;
     -fx-alignment: center;
-    -fx-padding: 10px 15px;
-    -fx-min-width: 100%;
+    -fx-padding: 10px;
+    -fx-background-radius: 0 0 10 10;
 }
 
-.weather-box {
-    -fx-padding: 10;
-    -fx-spacing: 5;
-    -fx-alignment: top;
-    -fx-background-radius: 5;
-    -fx-background-color: rgba(255, 255, 255, 0.7);
-}
-
-.weather-text {
-    -fx-font-size: 14px;
-    -fx-text-fill: #333;
-}
-
-.button {
+.logout-button {
     -fx-background-color: #3399ff;
     -fx-text-fill: white;
     -fx-font-size: 18px;
@@ -35,40 +22,26 @@
     -fx-padding: 10 20;
 }
 
-.button:hover {
-    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #4a9edc, #2d76b5);
-}
-
-.text-area {
-    -fx-font-size: 14px;
-    -fx-background-color: #ffffff;
-    -fx-border-color: #cccccc;
-    -fx-border-radius: 6px;
-    -fx-padding: 10;
-}
-
-.scroll-content {
-    -fx-background-color: #ffffff;
-    -fx-padding: 5;
-}
-
 .map-area {
     -fx-background-color: #c0c0c0;
     -fx-background-radius: 10;
     -fx-effect: innershadow(gaussian, #888888, 5, 0.5, 0, 0);
     -fx-alignment: center;
 }
-.sub-header-label {
-    -fx-font-size: 16px;
+.button {
+    -fx-pref-width: 100px;
+    -fx-pref-height: 35px;
     -fx-font-weight: bold;
-    -fx-text-fill: #175b76;
-    -fx-padding: 5 0;
+    -fx-font-size: 14px;
+    -fx-background-radius: 10;
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #3d89c9, #2566a0);
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0.2, 0, 2);
 }
 
-.marker-form {
-    -fx-background-color: #ffffff;
-    -fx-padding: 15;
-    -fx-spacing: 10;
-    -fx-background-radius: 8;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0.5, 0, 0);
+.button:hover {
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #4a9edc, #2d76b5);
+    -fx-translate-y: -2;
+    -fx-cursor: hand;
 }
+
