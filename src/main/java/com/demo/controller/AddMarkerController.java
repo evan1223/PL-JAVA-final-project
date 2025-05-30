@@ -33,7 +33,6 @@ public class AddMarkerController {
         this.markerManager = markerManager;
     }
 
-
     public void setStage(Stage stage) {
         this.stage = stage;
     }
@@ -54,15 +53,11 @@ public class AddMarkerController {
                 return;
             }
 
-            // create a new MapMarker object and save it to DB
-            MapMarker marker = new MapMarker(latitude, longitude, name, true);
+            MapMarker marker = new MapMarker(latitude, longitude, name, description, true);
             markerService.saveMarkerToDatabase(marker, description);
 
-            // clear the temporary marker and refresh the map
             markerManager.clearTemporaryMarker();
             markerManager.refreshMapMarkers();
-
-            // close the window
             stage.close();
 
         } catch (Exception e) {
@@ -76,5 +71,4 @@ public class AddMarkerController {
         markerManager.clearTemporaryMarker();
         stage.close();
     }
-
 }

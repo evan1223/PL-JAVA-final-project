@@ -41,7 +41,12 @@ public class UserService {
                     double longitude = rs.getDouble("longitude");
                     String popupText = rs.getString("popupText");
                     boolean openPop  = rs.getBoolean("isOpenPopup");
-                    result.add(new MapMarker(latitude, longitude, popupText, openPop));
+                    String[] parts = popupText.split("\n", 2);
+                    String name = parts.length > 0 ? parts[0] : "";
+                    String description = parts.length > 1 ? parts[1] : "";
+
+                    result.add(new MapMarker(latitude, longitude, name, description, openPop));
+
                 }
             }
         } catch (SQLException e) {
