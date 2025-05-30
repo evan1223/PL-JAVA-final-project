@@ -14,7 +14,7 @@
           AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20">
 
         <!-- 標題 -->
-        <Label text="Broken floor tiles map" styleClass="title-label" />
+        <Label text="Broken Floor Tiles Map" styleClass="title-label" />
 
         <!-- 帳號欄 -->
         <Label text="Account:" styleClass="field-label" />

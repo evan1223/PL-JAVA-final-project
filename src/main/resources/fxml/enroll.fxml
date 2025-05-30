@@ -31,7 +31,7 @@
         <!-- 按鈕區塊 -->
         <HBox spacing="20" alignment="CENTER">
             <Button text="Sign Up" onAction="#handleEnroll" styleClass="button"/>
-            <Button text="Back to Login" onAction="#handleGoToLogin" styleClass="button"/>
+            <Button text="Back" onAction="#handleGoToLogin" styleClass="button"/>
         </HBox>
 
         <!-- 訊息顯示 -->
