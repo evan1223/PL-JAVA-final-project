@@ -1,5 +1,6 @@
 package com.demo.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -48,4 +49,13 @@ public class LoginController {
         System.out.println("loginController有被spring建立" );
         System.out.println(getClass().getResource("/styles/themes/login.css"));
     }
+    @FXML
+    private void handleSignUp(ActionEvent event) {
+        try {
+            SceneManager.switchScene("/fxml/enroll.fxml", "/styles/enroll.css", "Sign Up");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
