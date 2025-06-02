@@ -137,7 +137,7 @@ public class MainController implements MapClickCallback {
                 Platform.runLater(() -> {
                     weatherLabel.setText("天氣: " + weatherDesc);
                     temperatureLabel.setText(String.format("%.1f°C", temp));
-                    precipitationLabel.setText("降雨" + precip + "%");
+                    precipitationLabel.setText("降雨:" + precip + "%");
                     updateWeatherIcon(weatherCode);
                 });
             } catch (Exception e) {
@@ -199,7 +199,6 @@ public class MainController implements MapClickCallback {
     }
 
     @FXML
-    // 删除@Override注解，因为这不是接口中定义的方法
     public void openAddMarkerWindow() {
         Platform.runLater(() -> {
             try {

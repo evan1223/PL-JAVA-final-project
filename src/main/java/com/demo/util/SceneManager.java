@@ -104,7 +104,7 @@ public class SceneManager {
 
         Parent root = loader.load();
         Stage stage = new Stage();
-        stage.setTitle("添加标记");
+        stage.setTitle("新增標記");
         stage.setScene(new Scene(root));
         stage.initModality(Modality.NONE);
         stage.initOwner(primaryStage);

@@ -18,21 +18,24 @@ public class MapMarkerService implements InitializingBean {
     @Autowired
     private UserService userService;
 
+    // excute once after all dependencies are injected
     @Override
     public void afterPropertiesSet() {
         refreshUserMarkers();
     }
-
+    // returns an read-only list of markers
     public List<MapMarker> getAllMarkers() {
         return Collections.unmodifiableList(markers);
     }
 
+    // manual add a marker
     public void addMarker(MapMarker marker) {
         if (marker != null) {
             markers.add(marker);
         }
     }
 
+    // refresh user markers from UserService, can be called when user logs in or switches
     public void refreshUserMarkers() {
         markers.clear();
 
@@ -40,38 +43,32 @@ public class MapMarkerService implements InitializingBean {
         if (userMarkers != null && !userMarkers.isEmpty()) {
             markers.addAll(userMarkers);
         }
-
-        markers.add(new MapMarker(24.9866487, 121.5765365, "政大商學院", "教室與圖書館", false));
+        // default Markers
+        markers.add(new MapMarker(24.9866487, 121.5765365, "政大商學院", "", true));
     }
 
-    public void saveMarkerToDatabase(MapMarker marker, String description) {
-        userService.saveUserMarker(marker, description); // 假設你資料庫也會存 description
-        markers.add(marker);
-        refreshUserMarkers();
-    }
-
-    // Escape HTML/JS for safety
-    private String escapeJavaScript(String text) {
-        return text.replace("'", "\\'")
-                .replace("\"", "&quot;")
-                .replace("\n", "<br>");
-    }
-
+    // static method to generate JavaScript for markers
     public String generateMarkersJavaScript() {
         StringBuilder script = new StringBuilder();
 
         for (MapMarker m : markers) {
-            String popup = escapeJavaScript(m.getPopupText());
             script.append(String.format(
                     "L.marker([%f, %f], {icon: customIcon}).addTo(map).bindPopup('%s')%s;\n",
                     m.getLatitude(),
                     m.getLongitude(),
-                    popup,
+                    m.getPopupText(),
                     m.getIsOpenPopup() ? ".openPopup()" : ""
             ));
         }
 
         return script.toString();
     }
+    public void saveMarkerToDatabase(MapMarker marker, String description) {
+        // save marker to DB
+        userService.saveUserMarker(marker, description);
+        // add marker to local list
+        markers.add(marker);
+        // refresh markers to ensure the latest data is used
+        refreshUserMarkers();
+    }
 }
-
